@@ -23,7 +23,7 @@ sudo apt-get -y install wget curl
 
 echo
 echo
-echo "PHP Component Installer version 0.1.1"
+echo "PHP Component Installer version 1.0.0"
 echo
 
 if [ $(which php) = "" ]; then
@@ -46,6 +46,7 @@ installphar https://phar.phpunit.de/phploc.phar phploc
 installphar https://phar.phpunit.de/phpunit-skelgen.phar phpunit-skelgen
 installphar http://static.phpmd.org/php/latest/phpmd.phar phpmd
 installphar http://phpdox.de/releases/phpdox.phar phpdox
+installphar http://apigen.org/apigen.phar apigen
 
 # Special Handling for Box
 #
@@ -62,16 +63,5 @@ echo $(trim "$(box --version)")
 #
 punittag=$(php -r "echo version_compare(PHP_VERSION,'5.6.0')>=0?'':'-old';")
 installphar https://phar.phpunit.de/phpunit${punittag}.phar phpunit
-
-# Special Handling for PhpDoc
-#
-# PhpDoc is not compatible to PHP 7
-#
-phpdoctag=$(php -r "echo version_compare(PHP_VERSION,'7.0.0')>=0?'':'install';")
-if [ "${phpdoctag}" != "install" ]; then
-    trim "PhpDoc does not support PHP 7"
-else
-    installphar http://phpdoc.org/phpDocumentor.phar phpdoc
-fi
 
 echo
